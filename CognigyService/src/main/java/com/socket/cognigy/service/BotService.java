@@ -1,10 +1,16 @@
 package com.socket.cognigy.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import com.socket.cognigy.model.output.OutputData;
 import com.socket.cognigy.util.CognigyConnectionUtil;
 import com.socket.cognigy.util.CognigyMessageUtil;
 import com.socket.cognigy.util.CognigyOutputUtil;
@@ -26,27 +32,31 @@ public class BotService {
 	@Autowired
 	CognigyOutputUtil cou;
 
-	public String generateBotReply(String userMessage) {
+	@Async
+	public CompletableFuture<List<OutputData>> generateBotReply(String userMessage) {
+		List<OutputData> outputDataList = new ArrayList<OutputData>();
+		
+		System.out.println("-------generateBotReply started ");
+		System.out.println("1 list size = "+outputDataList.size());
 		if (null == socket) {
 			System.out.println(" socket_id null");
 			socket = ccu.getCognigyBotMessage();
 			socket_id = socket.id();
 		} else {
-			System.out.println("socket_id not null");
-			String jsonStr = cmu.getJson(socket_id, userMessage);
-			
-			CompletableFuture.runAsync(() -> {
+			try {
+				System.out.println("socket_id not null");
+				String jsonStr = cmu.getJson(socket_id, userMessage);
 				cmu.sendMessage(socket, jsonStr);
-			});
-
-			
-			
-			CompletableFuture.runAsync(() -> {
-				cou.getOutput(socket);
-			});
+				outputDataList = cou.getOutput(socket);
+				System.out.println("2 list size = "+outputDataList.size());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 		}
-		return "Hey " + userMessage + "!!. How Are You? Your Socket ID Is : " + socket_id;
+		CompletableFuture<List<OutputData>> completableFutureList = CompletableFuture.completedFuture(outputDataList);
+		return completableFutureList;
 	}
 
 }

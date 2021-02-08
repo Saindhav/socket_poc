@@ -4,6 +4,9 @@ import java.net.URI;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -25,14 +28,13 @@ public class CognigyConnectionUtil {
 
 		IO.setDefaultOkHttpWebSocketFactory(client);
 		IO.setDefaultOkHttpCallFactory(client);
-
+		
 		URI uri = URI.create("https://endpoint-trial.cognigy.ai");
 		Socket socket = IO.socket(uri, options);
 
 		socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
 			@Override
 			public void call(Object... args) {
-				//System.out.println("CONNECTED WITH : " + socket.id());
 			}
 		});
 
@@ -40,11 +42,9 @@ public class CognigyConnectionUtil {
 		try {
 			Thread.sleep(4000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return socket;
-
 	}
 
 }
