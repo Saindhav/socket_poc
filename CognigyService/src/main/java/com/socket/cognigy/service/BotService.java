@@ -50,7 +50,6 @@ public class BotService {
 				outputDataList = cou.getOutput(socket);
 				System.out.println("2 list size = "+outputDataList.size());
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
