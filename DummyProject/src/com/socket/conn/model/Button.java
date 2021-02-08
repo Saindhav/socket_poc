@@ -1,4 +1,4 @@
-package com.bot.message;
+package com.socket.conn.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

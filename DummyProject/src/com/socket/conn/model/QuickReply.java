@@ -1,4 +1,4 @@
-package com.bot.message;
+package com.socket.conn.model;
 
 public class QuickReply{
     public double id;
