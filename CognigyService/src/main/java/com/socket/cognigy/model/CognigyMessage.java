@@ -75,7 +75,11 @@ public class CognigyMessage {
 	public void setData(Map<String, String> data) {
 		this.data = data;
 	}
-	
-	
-
+	@Override
+	public String toString() {
+		return "CognigyMessage [URLToken=" + URLToken + ", sessionId=" + sessionId + ", userId=" + userId
+				+ ", passthroughIP=" + passthroughIP + ", reloadFlow=" + reloadFlow + ", resetFlow=" + resetFlow
+				+ ", resetState=" + resetState + ", resetContext=" + resetContext + ", text=" + text + ", data=" + data
+				+ "]";
+	}
 }

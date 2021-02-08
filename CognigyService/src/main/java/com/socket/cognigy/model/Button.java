@@ -7,6 +7,7 @@ public class Button {
 	public String payload;
 	public String type;
 	public String title;
+	public String url;
 
 	@JsonProperty("id")
 	public double getId() {
@@ -47,4 +48,18 @@ public class Button {
 		this.title = title;
 	}
 
+	@JsonProperty("url")
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	@Override
+	public String toString() {
+		return "Button [id=" + id + ", payload=" + payload + ", type=" + type + ", title=" + title + ", url=" + url
+				+ "]";
+	}
 }
